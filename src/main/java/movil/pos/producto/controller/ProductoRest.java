@@ -66,6 +66,17 @@ public class ProductoRest {
         return  ResponseEntity.ok(producto);
     }
   
+    @GetMapping(value = "por/codigo/{codigo}")
+    public ResponseEntity<Producto> obtenerProducto(@PathVariable("codigo") String codigo) {
+        log.info("Fetching Producto with codigo {}", codigo);
+        Producto producto = productoService.obtenerProducto(codigo);
+        if (  null == producto) {
+            log.error("Producto with codigo {} not found.", codigo);
+            return  ResponseEntity.notFound().build();
+        }
+        return  ResponseEntity.ok(producto);
+    }
+
     // -------------------Create a Producto-------------------------------------------
   
     @PostMapping

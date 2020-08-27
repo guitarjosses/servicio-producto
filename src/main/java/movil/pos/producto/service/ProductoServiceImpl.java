@@ -80,5 +80,7 @@ public class ProductoServiceImpl implements ProductoService {
         return  productoRepository.findByCategoriaProductoId(categoriaProductoId);
     }
 
-    
+    public Producto obtenerProducto(String codigo){
+        return productoRepository.findByCodigo(codigo);
+    }
 }
