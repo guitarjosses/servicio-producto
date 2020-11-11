@@ -107,6 +107,33 @@ public class ProductoRest {
         productoActual=productoService.actualizarProducto(producto);
         return  ResponseEntity.ok(productoActual);
     }
+
+    @PutMapping(value = "/actualizar/stock/{id}")
+    public ResponseEntity<?> actualizarSctockProducto(@PathVariable("id") long id, @RequestBody Producto producto) {
+  
+        Producto productoActual = productoService.obtenerProducto(id);
+  
+        if ( null == productoActual ) {
+            return  ResponseEntity.notFound().build();
+        }
+        producto.setId(id);
+        productoActual=productoService.actualizarStockProducto(producto);
+        return  ResponseEntity.ok(productoActual);
+    }
+
+    @PutMapping(value = "/actualizar/stock/precio/compra/{id}")
+    public ResponseEntity<?> actualizarSctockYPrecioCompraProducto(@PathVariable("id") long id, @RequestBody Producto producto) {
+  
+        Producto productoActual = productoService.obtenerProducto(id);
+  
+        if ( null == productoActual ) {
+            return  ResponseEntity.notFound().build();
+        }
+        producto.setId(id);
+        productoActual=productoService.actualizarStockProducto(producto);
+        return  ResponseEntity.ok(productoActual);
+    }
+
   
     // ------------------- Delete a Categoria Producto-----------------------------------------
   

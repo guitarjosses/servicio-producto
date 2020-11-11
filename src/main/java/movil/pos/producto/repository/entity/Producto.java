@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,14 +27,17 @@ public class Producto {
 	private String codigo;
 	private String nombre;
     
-    @Column(name = "categoria_producto_id")
-    private Long categoriaProductoId;
+    @ManyToOne
+    @JoinColumn(name = "categoria_producto_id")
+    private CategoriaProducto categoriaProducto;
 
-    @Column(name = "unidad_medida_id")
-    private Long unidadMedidaId;
+    @ManyToOne
+    @JoinColumn(name = "unidad_medida_id")
+    private UnidadMedida unidadMedida;
 
-    @Column(name = "impuesto_id")
-    private Long impuestoId;   
+    @ManyToOne
+    @JoinColumn(name = "impuesto_id")
+    private Impuesto impuesto;
     
     @Column(name = "es_servicio")
     private boolean esServicio;
@@ -53,10 +58,10 @@ public class Producto {
     private BigDecimal precioVentaMayorista;  
     
     @Column(name = "stock_actual")
-    private BigDecimal stockActual;
+    private int stockActual;
     
     @Column(name = "stock_minimo")
-    private BigDecimal stockMinimo;
+    private int stockMinimo;
     
 	private boolean activo;
 

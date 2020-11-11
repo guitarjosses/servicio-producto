@@ -15,5 +15,7 @@ public interface ProductoService {
     public List<Producto> findByCategoriaProductoId(Long idCategoriaProducto);
     public Producto obtenerUltimoRegistro();
     public Producto obtenerProducto(String codigo);
+    public Producto actualizarStockProducto(Producto producto);
+    public Producto actualizarStockYPrecioCompraProducto(Producto producto);
 
 }

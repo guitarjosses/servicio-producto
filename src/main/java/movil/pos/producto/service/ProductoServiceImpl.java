@@ -1,5 +1,6 @@
 package movil.pos.producto.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,10 @@ public class ProductoServiceImpl implements ProductoService {
 
         productoDB.setCodigo(producto.getCodigo());
         productoDB.setNombre(producto.getNombre());
-        productoDB.setCategoriaProductoId(producto.getCategoriaProductoId());
-        productoDB.setImpuestoId(producto.getImpuestoId());
+        productoDB.setCategoriaProducto(producto.getCategoriaProducto());
+        productoDB.setImpuesto(producto.getImpuesto());
         productoDB.setEsServicio(producto.isEsServicio());
-        productoDB.setUnidadMedidaId(producto.getUnidadMedidaId());
+        productoDB.setUnidadMedida(producto.getUnidadMedida());
         productoDB.setPrecioCompra(producto.getPrecioCompra());
         productoDB.setPorcentajePrecioVentaMinorista(producto.getPorcentajePrecioVentaMinorista());
         productoDB.setPrecioVentaMinorista(producto.getPrecioVentaMinorista());
@@ -83,4 +84,32 @@ public class ProductoServiceImpl implements ProductoService {
     public Producto obtenerProducto(String codigo){
         return productoRepository.findByCodigo(codigo);
     }
+
+    @Override
+    public Producto actualizarStockProducto(Producto producto) {
+        Producto productoDB = obtenerProducto(producto.getId());
+        if (productoDB == null){
+            return  null;
+        }
+
+        productoDB.setStockActual(producto.getStockActual());
+
+        return  productoRepository.save(productoDB);
+    }
+
+    @Override
+    public Producto actualizarStockYPrecioCompraProducto(Producto producto) {
+        Producto productoDB = obtenerProducto(producto.getId());
+        if (productoDB == null){
+            return  null;
+        }
+
+        productoDB.setStockActual(producto.getStockActual());
+        productoDB.setPrecioCompra(producto.getPrecioCompra());
+        productoDB.setPrecioVentaMinorista(((productoDB.getPorcentajePrecioVentaMinorista().divide(new BigDecimal(100))).add(new BigDecimal(1))).multiply(producto.getPrecioCompra()));
+        productoDB.setPrecioVentaMayorista(((productoDB.getPorcentajePrecioVentaMayorista().divide(new BigDecimal(100))).add(new BigDecimal(1))).multiply(producto.getPrecioCompra()));
+
+        return  productoRepository.save(productoDB);
+    }
+
 }
